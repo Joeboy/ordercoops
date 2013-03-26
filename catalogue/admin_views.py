@@ -24,8 +24,8 @@ class OrderForm(ModelForm):
         exclude=('cooperative',)
 
     class Media:
-        js=('js/jquery-ui-1.7.1.custom.min.js',)
-        css={'screen':('jquery-ui-css/jquery-ui-1.7.1.custom.css',)}
+        js = ("//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js",)
+        css={'screen':('http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/start/jquery-ui.css',)}
 
 @user_is_coop_admin
 def delete_order(request, order_id):
@@ -233,8 +233,8 @@ class CatalogueForm(forms.ModelForm):
         exclude = ('data_import_completed',)
 
     class Media:
-        js=('js/jquery-ui-1.7.1.custom.min.js',)
-        css={'screen':('jquery-ui-css/jquery-ui-1.7.1.custom.css',)}
+        js = ("//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js",)
+        css={'screen':('http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/start/jquery-ui.css',)}
 
 def upload_catalogue(request):
     if not request.user.is_staff:
