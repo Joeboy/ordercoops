@@ -1,0 +1,5 @@
+<ul>
+{% for coop in cooperatives %}
+<li><a href="{{coop.get_absolute_absolute_url}}">{{coop.name}}</a></li>
+{% endfor %}
+</ul>

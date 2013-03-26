@@ -1,0 +1,40 @@
+{% extends "catalogue/base.html"%}
+
+{% block content%}
+
+<div style="background-color:#fff">
+{% for message in messages %}
+<p>{{message}}</p>
+{% endfor %}
+</div>
+
+{% if object_list %}
+<table>
+<tr>
+<th>Open?</th>
+<th>Supplier</th>
+<th>Delivery date</th>
+<th>&nbsp;</th>
+<th>&nbsp;</th>
+<th>&nbsp;</th>
+<th>&nbsp;</th>
+</tr>
+{% for order in object_list %}
+<tr>
+<td>{% if order.open %}Y{% else %}N{% endif %}</td>
+<td>{{order.catalogue.supplier}}</td>
+<td>{{order.delivery_date}}</td>
+<td><a href="/coop-admin/edit-order/{{order.id}}/">Edit</a></td>
+<td><a href="/coop-admin/delete-order/{{order.id}}/">Delete</a></td>
+<td><a href="/coop-admin/uncollated-order/{{order.id}}/">View uncollated</a></td>
+<td><a href="/coop-admin/collated-order/{{order.id}}/">View collated</a></td>
+</tr>
+{% endfor %}
+</table>
+{% else %}
+<p>You have no orders scheduled.</p>
+{% endif %}
+
+<p><a href="/coop-admin/new-order/">Schedule a new order</a></p>
+
+{% endblock %}

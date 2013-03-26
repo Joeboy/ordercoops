@@ -1,0 +1,29 @@
+# Copy this file to localsettings.py and edit to taste
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ordercoops',
+        'USER': 'ordercoops',
+        'PASSWORD': 'changeme',
+    }
+}
+
+
+ADMINS = (
+    ('Your name', 'you@example.com'),
+        )
+MANAGERS = ADMINS
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# You should modify this to your own random key. You can generate one with:
+# python -c 'import random; print "".join([random.choice("abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)") for i in range(50)])'
+SECRET_KEY = 'h#g95)60c%ii!r=k+kcf6k3^7ov@3+11zd3nf)^p@amufrn53f'
+
+SMTP_USERNAME='username'
+SMTP_PASSWORD='password'
+
+

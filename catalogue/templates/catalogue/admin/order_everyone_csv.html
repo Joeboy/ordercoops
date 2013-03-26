@@ -1,0 +1,3 @@
+{% for item in items %}{% ifchanged item.basket.userprofile %}{% ifequal order_by "person" %}"{{ item.basket.userprofile.name }}","","","Total:","{{ item.basket.total_price|stringformat:".2f" }}"
+{% endifequal %}{% endifchanged %}"{{item.basket.userprofile.name}}","{{item.product}}","{{item.product.get_outgoing_unit_size}}","{{item.quantity}}","{{item.total_price|stringformat:".2f"}}"
+{% endfor %}

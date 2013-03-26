@@ -1,0 +1,16 @@
+{% if user.is_authenticated %}
+<p>You are logged in as
+<strong>{% if user.get_profile %}{{user.get_profile.name}}{% else %}{{user.username}}{% endif %}</strong></p>
+<p><a href="/user/logout/">Log out</a></p>
+{% else %}
+    <h4>Log in:</h4>
+
+	<form method="post" action="/user/login/">
+		<p><strong>Username</strong>:<br />
+        <input type="text" class="rightcol-input" name="username" value="" /></p>
+		<p><strong>Password</strong>:<br />
+        <input type="password" class="rightcol-input" name="password" value="" /></p>
+	<input type="hidden" name="next" value="/" />
+		<p><input type="submit" value="Log in" /></p>
+	</form>
+{% endif %}

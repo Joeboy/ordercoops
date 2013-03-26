@@ -1,0 +1,28 @@
+{% extends 'catalogue/base.html' %}
+
+{% block content %}
+<table>
+<tr>
+<th>Product</th>
+<th>Size</th>
+<th>Unit price</th>
+<th>Units ordered</th>
+<th>Surplus units</th>
+<th>Units required</th>
+<th>Cost</th>
+</tr>
+{% for row in data %}
+<tr{% if row.product.is_splittable %} class="splittable"{% endif %}>
+<td><p>{{row.product}}</p></td>
+<td><p>{{row.product.size}}</p></td>
+<td><p style="text-align:right">{{row.product.gross_price|stringformat:".2f"}}</p></td>
+<td><p style="text-align:right">{{row.outgoing_units}}</p></td>
+<td><p style="text-align:right">{% if row.surplus_units %}{{row.surplus_units}}{% endif %}</p></td>
+<td><p style="text-align:right">{{row.units_required}}</p></td>
+<td><p style="text-align:right">{{row.cost|stringformat:".2f"}}</p></td>
+</tr>
+{% endfor %}
+</table>
+<p>Grand total: <strong>{{grand_total}}</strong></p>
+<p><a href="./?download=True">Download as csv file</a></p>
+{% endblock %}

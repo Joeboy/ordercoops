@@ -1,0 +1,25 @@
+{% extends 'userprofile/base.html' %}
+
+{% block content %}
+
+	{% if alreadyloggedin %}
+		<p>You are already logged in.</p>
+	{% else %}
+		{% if succeeded %}
+			<p>Login successful</p>
+		{% else %}
+			{% if failed %}
+				<p>Sorry, you entered an invalid username / password. Please try again.</p>
+			{% else %}
+				<p>Please enter your username and password.</p>
+			{% endif %}
+			<form method="post" action="./">
+				<p><strong>Username</strong>: <input type="text" name="username" value="" /></p>
+				<p><strong>Password</strong>: <input type="password" name="password" value="" />
+				<input type="hidden" name="next" value="{{next}}" /></p>
+				<p><input type="submit" value="Log in" /></p>
+			</form>
+		{% endif %}
+	{% endif %}
+{% endblock %}
+

@@ -1,0 +1,21 @@
+{% extends "catalogue/base.html" %}
+
+{% block extrahead %}
+{{ block.super }}
+{{ form.media }}
+<script type="text/javascript"><!--
+$(document).ready(function() {
+    $('input#id_closing_date').datepicker({'dateFormat':'yy-mm-dd'});
+    $('input#id_delivery_date').datepicker({'dateFormat':'yy-mm-dd'});
+});
+//--></script>
+{% endblock %}
+
+{% block content %}
+
+<form action="" method="post">
+{{form.as_p}}
+<input type="submit">
+</form>
+
+{% endblock%}

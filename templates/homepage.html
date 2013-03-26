@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block meta_title %}<title>Co-operative ordering website</title>{% endblock %}
+
+{% block content %}
+
+{% if cooperatives %}
+<div id="rightcol">
+<h4>Groups</h4>
+{% for c in cooperatives %}
+{{request}}
+<p><a href="{{c.get_absolute_absolute_url}}">{{c.name}}</a></p>
+{% endfor %}
+
+</div>
+{% endif %}
+
+<div class="text-block">
+<p>Hello and welcome to what I hope will become the UK's preeminent guerilla bulk wholefood ordering website.</p>
+
+<h4>What is this thing?</h4>
+
+<p>This website provides a system to help groups of people to co-ordinate orders from food wholesalers.</p>
+
+<p>Wholesalers don't normally do business directly with individuals, but by forming a group you can arrange to place larger orders and split them between your members. At present we support ordering from the <a href="http://www.essential-trading.co.uk/">Essential Trading Co-operative</a> (based in Bristol) and <a href="http://www.suma.co.uk/">Suma Wholefoods</a> (Based in Yorkshire).
+</p>
+
+<h4>Sounds great! What do I need to do?</h4>
+
+<ul>
+    <li>Get an account with one of the supported wholesalers. Note that Suma has a policy of denying not-for-profit groups accounts if they supply businesses in the local area who are liable to be upset by the competition.</li>
+    <li>Get in touch with me and persuade me to set your group up with an account on the website. How to do this is left as an exercise for the reader.</li>
+    <li>Enter a list of the people who will be able to place orders through your group</li>
+    <li>Schedule an order through the website.</li>
+    <li>Your members will be able to use the website to easily search the wholesaler's catalogue and place orders.</li>
+    <li>Download a collated order and email it to the wholesaler.</li>
+    <li>Wait for goods to arrive</li>
+    <li>Divide up the goods</li>
+</ul>
+
+<p>That's the gist of it. There are a few further things you should probably consider:</p>
+
+<ul>
+    <li>Money, obviously. You may wish to collect payment from your members in advance, but bear in mind that sometimes things are out of stock and money has to be refunded, which is a hassle. You might find it easier if somebody can front the money and then collect the correct amount from people when they come to collect their orders.</li>
+    <li>Delivery. Somebody needs to be around when the order arrives, preferably a few people if it's a big order.</li>
+    <li>Storage. Depending on how big your group is, you might find that you're ordering a considerable volume of goods. Having a living room full of other people's lentils and soya milk gets a bit wearing after a while, so make sure you either have plenty of spare storage space or your members can take their stuff away promptly.</li>
+    <li>Dividing the spoils. The wholesaler will deliver a big pile of goods, which you will need to turn into a number of piles containing the things each of your members ordered. This isn't rocket science or anything, but it takes a while and preferably a few (not too many) people to help.</li>
+</ul>
+
+<p>This website is in no way affiliated with Suma or Essential or any other wholesaler. In fact at the time of writing they don't even know it exists. It's just a convenient facility I made for groups who want to place orders with them.</p>
+
+{#% load userprofile_tags %}{% cooperative_homepage_links %#}
+</div>
+{% endblock %}

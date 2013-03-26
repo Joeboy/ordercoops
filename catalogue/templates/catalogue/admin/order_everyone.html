@@ -1,0 +1,24 @@
+{% extends 'catalogue/base.html' %}
+
+{% block content %}
+<p>Sort by: <a href="./?order_by=product">Product</a> | <a href="./?order_by=person">Person</a></p>
+<table>
+{% for item in items %}
+{% ifchanged item.basket.userprofile %}{% ifequal order_by "person" %}<tr>
+<td><p><strong>{{ item.basket.userprofile.name }}</strong></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p style="text-align:right">Total:</p></td>
+<td><p>{{ item.basket.total_price|stringformat:".2f" }}</p></td>
+</tr>{% endifequal %}{% endifchanged %}
+<tr{% if item.product.is_splittable %} class="splittable"{% endif %}>
+<td><p>{{item.basket.userprofile.name}}</p></td>
+<td><p>{{item.product}}</p></td>
+<td><p>{{item.product.get_outgoing_unit_size}}</p></td>
+<td><p style="text-align:right">{{item.quantity}}</p></td>
+<td><p style="text-align:right">{{item.total_price|stringformat:".2f"}}</p></td>
+</tr>
+{% endfor %}
+</table>
+<p><a href="./?order_by={{order_by}}&amp;download=True">Download</a></p>
+{% endblock %}

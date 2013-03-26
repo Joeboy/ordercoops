@@ -1,0 +1,77 @@
+{% extends 'homepage.html' %}
+{% block meta_title %}<title>{{cooperative.name}} Suma order homepage</title>{% endblock %}
+
+{% block content %}
+
+<div class="text-block">
+<div class="messages">
+{% for message in messages %}
+<p>{{message}}</p>
+{% endfor %}
+</div>
+
+{% load userprofile_tags %}
+
+<div id="rightcol">
+{% if_user_is_coop_admin %}
+<h4>Administration</h4>
+<p><a href="/coop-admin/members/">Members</a></p>
+<p><a href="/coop-admin/edit-homepage/">Edit homepage text</a></p>
+{% else %}
+{% user_box user %}
+{% endif_user_is_coop_admin %}
+</div>
+
+<h2>{{cooperative.name}}</h2>
+{{cooperative.homepage_text|safe}}
+
+{% if_user_is_coop_member %}
+	<h3>Upcoming orders:</h3>
+	{% if cooperative.order_set.all %}
+		<table>
+		<tr>
+		<th>Open?</th>
+		<th>Supplier</th>
+		<th>Closing date</th>
+		<th>Delivery date</th>
+            {% if_user_is_coop_admin %}
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+            {% endif_user_is_coop_admin %}
+		<th>&nbsp;</th>
+		</tr>
+		{% for order in cooperative.order_set.all %}
+			<tr>
+			<td>{% if order.is_open %}Y{% else %}N{% endif %}</td>
+			<td>{{order.catalogue.supplier}}</td>
+			<td>{{order.closing_date}}</td>
+			<td>{{order.delivery_date}}</td>
+            {% if_user_is_coop_admin %}
+			<td><a href="/coop-admin/edit-order/{{order.id}}/">Edit</a></td>
+			<td><a href="/coop-admin/delete-order/{{order.id}}/">Delete</a></td>
+			<td><a href="/coop-admin/uncollated-order/{{order.id}}/">View uncollated</a></td>
+			<td><a href="/coop-admin/collated-order/{{order.id}}/">View collated</a></td>
+            {% endif_user_is_coop_admin %}
+			<td>{% if order.is_open %}<a href="/order-{{order.id}}/browse/">Browse Catalogue</a>{% else %}&nbsp;{% endif %}</td>
+			</tr>
+		{% endfor %}
+    	</table>
+	{% else %}
+    	<p>You have no orders scheduled.</p>
+	{% endif %}
+	
+    {% if_user_is_coop_admin %}
+	<p><a href="/coop-admin/new-order/">Schedule a new order</a></p>
+    {% endif_user_is_coop_admin %}
+
+    {% if user.is_staff %}
+    <p><a href="/catalogue/upload/">Upload new catalogue</a></p>
+    {% endif %}
+	
+{% endif_user_is_coop_member %}
+
+
+</div>
+{% endblock %}

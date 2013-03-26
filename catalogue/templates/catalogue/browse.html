@@ -1,0 +1,160 @@
+{% extends 'catalogue/base.html' %}
+
+{% block extrahead %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/basket.js"></script>
+{% if just_basket %}
+<style type="text/css">
+body { background-color:#ffcccc; }
+</style>
+{% endif %}
+{{block.super}}
+{% endblock %}
+
+{% block content %}
+<div id="rightcol">
+{% if user.is_anonymous %}
+    <h4>Basket</h4>
+    <p>You need to log in before you can add items to your basket.</p>
+{% else %}
+    <h4><a href="/order-{{order.id}}/browse/?just_basket=True">{{user.get_profile.name}}'s basket</a></h4>
+{% if just_basket %}
+    <p><a href="/order-{{order.id}}/browse/">Browse&nbsp;catalogue</a> |
+{% else %}
+    <p><a href="/order-{{order.id}}/browse/?just_basket=True">Edit&nbsp;basket</a> |
+{% endif %}
+    <a href="/user/logout/?next=/">Log&nbsp;out</a></p>
+    <p><strong>Total</strong>: £<span id="id_total_basket_price">{{total_basket_price}}</span></p>
+{% endif %}
+<div id="basket-contents">
+{% for item in user.get_profile.basket_set.all.0.basketitem_set_all %}
+{{item}}
+{% endfor %}
+</div>
+
+{% load userprofile_tags %}
+{% user_box user%}
+
+</div>
+
+
+<p>
+<input type="hidden" id="id_username" name="username" value="{{user.get_profile.username}}" />
+<input type="hidden" id="id_order_id" name="order_id" value="{{order.id}}" />
+{% if just_basket %}
+<!--input type="hidden" id="id_just_basket" name="just_basket" value="{{just_basket}}" /-->
+{% endif %}
+</p>
+
+{% if not just_basket %}
+<table id="id_find_stuff_table" style="width:50%"><tr>
+<td colspan="2">
+<h3>Find stuff</h3>
+</td></tr>
+<tr>
+<td style="width:50%">
+<form action="./" method='post' id="id_productCategory_form">
+<h4>By Category</h4>
+<p><select name="productCategory" id="id_productCategory_selector">
+<option value="">All Categories</option>
+{% for c in productCategories %}
+<option value="{{c.slug}}"{%ifequal c.id productCategory.id%} selected="selected"{%endifequal%}>{{c.name|escape}}</option>
+{% endfor %}
+</select>
+<input type="submit" value="Go" /></p>
+</form>
+</td><td style="vertical-align:top;width:50%">
+<form action="./" method='post' id="id_brand_form">
+<h4>By brand</h4>
+<p><select name="brand" id="id_brand_selector">
+<option value="">All Brands</option>
+{% for b in brands %}
+<option value="{{b.0}}"{%ifequal b.0 brand.slug%} selected="selected"{%endifequal%}>{{b.1|escape}}</option>
+{% endfor %}
+</select>
+<input type="submit" value="Go" /></p>
+</form>
+</td></tr>
+<tr><td style="width:50%">
+<form action="./" method='post' id="id_code_form">
+<h4>Product code</h4>
+<p><input type="text" name="code" id="id_code_searchbox" value="{% if code %}{{code}}{% endif %}" />
+<input type="submit" value="Go" /></p>
+<p>(you can put in a partial code like 'TE' and it'll bring up all the products whose codes start with TE)</p>
+</form>
+</td><td style="vertical-align:top;width:50%">
+<form action="./" method='post' id="id_search_form">
+<h4>Product search:</h4>
+<p><input type="text" name="search" id="id_search_input" value="{% if search %}{{search}}{%endif%}" />
+<input type="submit" value="Go" /></p>
+</form>
+</td>
+</tr
+<tr>
+<td colspan="2">
+<p><a href="./?just_splittables=1">See all splittable items</a></p>
+</td>
+</tr></table>
+{% endif %}
+
+<form action="./" method='post' id="id_products_form">
+{% if just_basket %}
+    <h3>Here's what's in your basket:</h3>
+{% else %}
+<h3>Catalogue browser</h3>
+{% endif %}
+
+{% load catalogue_tags %}
+<p>{% if page.has_previous%}<a href="{{previous_url}}">Previous</a>{% endif %} (Page {{page.number}} of {{paginator.num_pages}}) {%if page.has_next%}<a href="{{next_url}}">Next</a>{%endif%}</p>
+<table>
+    <tr>
+        <td><p><strong>Code</strong></p></td>
+        <td><p><strong>Description</strong></p></td>
+        <td><p><strong>Brand</strong></p></td>
+        <td><p><strong>Category</strong></p></td>
+        <td><p><strong>Extra info</strong></p></td>
+        <td><p><strong>Size</strong></p></td>
+        <td><p><strong>Price each</strong></p></td>
+        <td><p><strong>Quantity</strong></p></td>
+        <td><p><strong>Total</strong></p></td>
+        <td><p></p></td>
+        <td><p></p></td>
+    </tr>
+{% for product in page.object_list %}
+{% if product.is_splittable %}
+<tr class="splittable"><td colspan="12"><p>The following item is a larger item that we're dividing up. Original item size: '{{product.size}}'. We're dividing it into {{product.outgoingUnitsPerIncomingUnit}} units of '{{product.outgoingUnitSize}}':</p></td></tr>
+    <tr class="splittable">
+        <td class="splittable"><p>{{product.supplier_product_code}}</p></td>
+        <td><p>{{product.name|escape}}</p></td>
+        <td><p><a href="?brand={{product.brand.slug}}">{{product.brand_name|escape}}</a></p></td>
+        <td><p><a href="?productCategory={{product.category.slug}}">{{product.category.name|escape}}</a></p></td>
+        <td><p>{{product.extra_info}}</p></td>
+        <td><p>{{product.outgoingUnitSize}}</p></td>
+        <td><p style="text-align:right">&pound;{{product.get_price|stringformat:".2f"}}</p></td>
+        <td><p style="text-align:center"><input class="quantityinput" type="text" id="id_product_quantity_{{product.id}}" name="product_quantity_{{product.id}}" value="{% num_in_basket product user %}" /></p></td>
+        <td><p style="text-align:right" id="id_product_total_price_{{product.id}}">{%item_total_price product user%}</p></td>
+        <td><p><a class="add_to_basket_link" id="add_product_{{product.id}}" href="/order-{{order.id}}/amend-basket-quantity/no-ajax/{{product.id}}/1/?next={{current_url|urlencode}}">Add</a></p></td>
+        <td><p><a class="remove_from_basket_link" id="rem_product_{{product.id}}" href="/order-{{order.id}}/amend-basket-quantity/no-ajax/{{product.id}}/-1/?next={{current_url|urlencode}}">Remove</a></p></td>
+    </tr>
+{% else %}
+    <tr>
+        <td><p>{{product.supplier_product_code}}</p></td>
+        <td><p>{{product.name|escape}}</p></td>
+        <td><p><a href="?brand={{product.brand_slug}}">{{product.brand_name|escape}}</a></p></td>
+        <td><p><a href="?productCategory={{product.category.slug}}">{{product.category.name|escape}}</a></p></td>
+        <td><p>{{product.extra_info}}</p></td>
+        <td><p>{{product.size}}</p></td>
+        <td><p style="text-align:right">&pound;{{product.get_price}}</p></td>
+        <td><p style="text-align:center"><input class="quantityinput" type="text" id="id_product_quantity_{{product.id}}" name="product_quantity_{{product.id}}" value="{% num_in_basket product user %}" /></p></td>
+        <td><p style="text-align:right" id="id_product_total_price_{{product.id}}">{%item_total_price product user%}</p></td>
+        <td><p><a class="add_to_basket_link" id="add_product_{{product.id}}" href="/order-{{order.id}}/amend-basket-quantity/no-ajax/{{product.id}}/1/?next={{current_url|urlencode}}">Add</a></p></td>
+        <td><p><a class="remove_from_basket_link" id="rem_product_{{product.id}}" href="/order-{{order.id}}/amend-basket-quantity/no-ajax/{{product.id}}/-1/?next={{current_url|urlencode}}">Remove</a></p></td>
+    </tr>
+{% endif %}
+{% endfor %}
+</table>
+
+<p>{% if page.has_previous%}<a href="{{previous_url}}">Previous</a>{% endif %} (Page {{page.number}} of {{paginator.num_pages}}) {%if page.has_next%}<a href="{{next_url}}">Next</a>{%endif%}</p>
+
+<!--input type="submit" /-->
+</form>
+{% endblock %}

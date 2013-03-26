@@ -1,0 +1,29 @@
+{% extends "catalogue/base.html" %}
+
+{% block extrahead %}
+{{ block.super }}
+{{ form.media }}
+<script type="text/javascript"><!--
+$(document).ready(function() {
+    $('input#id_start_date').datepicker({'dateFormat':'yy-mm-dd'});
+    $('input#id_expiry_date').datepicker({'dateFormat':'yy-mm-dd'});
+});
+//--></script>
+{% endblock %}
+
+{% block content %}
+<div class="messages">
+{% for message in messages %}
+<p>{{message}}</p>
+{% endfor %}
+</div>
+
+<h2>Catalogue upload</h2>
+<p>You want the text version linked <a href="http://www.suma.coop/download-links/">here</a>.</p>
+
+<form enctype="multipart/form-data" method="post" action="">
+{{ form.as_p }}
+<input type="submit" value="Do it" />
+</form>
+
+{% endblock%}

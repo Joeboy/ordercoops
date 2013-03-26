@@ -1,0 +1,20 @@
+{% extends 'userprofile/base.html' %}
+
+{% block content %}
+	<p>You are logged in as
+<strong>{% if user.get_profile %}{{user.get_profile.name}}{% else %}{{ user.username }}{% endif %}</strong>.</p>
+    {% if user.get_profile.current_subscriptions %}
+        <p>You have valid subscriptions for the following groups:</p>
+        <ul>{% for sub in user.get_profile.current_subscriptions %}
+            <li>{{ sub.group.name }} (expires in {{ sub.expiry_date|timeuntil }})</li>
+        {% endfor %}</ul>
+    {% endif %}
+
+    {% if user.get_profile.expired_subscriptions %}
+        <p>Your subscriptions for the following groups have expired:</p>
+        <ul>{% for sub in user.get_profile.expired_subscriptions %}
+            <li>{{ sub.group.name }}</li>
+        {% endfor %}</ul>
+    {% endif %}
+{% endblock %}
+

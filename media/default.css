@@ -1,0 +1,139 @@
+body {
+	background-color:#ffffcc;
+	margin:0px;
+}
+
+#container {
+	padding:5px;
+}
+
+#header {
+	background-color:#66aa44;
+	border-style: none solid solid solid;
+	border-color:#557766;
+	border-width:2px;
+}
+
+#header p {
+	margin:0px;
+	padding:0.2em;
+	font-style:italic;
+}
+
+#header p a {
+    color:#000;
+}
+
+td,th {
+	border-width: 0px 1px 1px 0px;
+	border-style: solid;
+	border-color: #cccccc;
+	margin:0px;
+	padding:0px;
+	background-color:#ffeedd;
+	font-family: arial, helvetica, sans-serif;
+	text-align:left;
+}
+
+th {
+	font-size:0.6em;
+}
+
+p {
+	font-size:0.8em;
+}
+
+li {
+	font-size:0.8em;
+}
+
+td p {
+	font-size:0.6em;
+	margin:0em 0.8em 0em 0.2em;
+	padding:0em;
+}
+
+#rightcol {
+	float:right;
+	width:200px;
+	background-color:#eeeeee;
+	border: 1px solid #cccccc;
+}
+#rightcol h4 {
+	font-size:0.9em;
+	color:#ffffcc;
+	background-color:#334455;
+	margin-top:0px;
+	padding-left:4px;
+}
+
+a {
+	color:#778899;
+	text-decoration:none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+#rightcol h4 a {
+	color:#ffffee;
+	text-decoration:none;
+}
+
+#rightcol p {
+	font-size:0.6em;
+	padding-left:4px;
+}
+
+input,select{
+	font-size:0.8em;
+}
+
+input.quantityinput {
+	width:2.5em;
+	text-align:right;
+}
+
+#basket-contents p {
+	margin-top:0.3em;
+	margin-bottom:0.3em;
+}
+
+#id_find_stuff_table h3{
+font-size:1em;
+margin:0em;
+}
+
+#id_find_stuff_table h4 {
+	font-size:0.8em;
+margin:0.3em 0em 0.1em 0em;
+}
+
+#id_find_stuff_table select {
+	width:20em;
+}
+
+#id_find_stuff_table td {
+	vertical-align: top;
+}
+
+#id_search_input {
+	width:20em;
+}
+
+#id_code_searchbox {
+	width:20em;
+}
+
+.text-block {
+	max-width:750px;
+}
+
+tr.splittable td {
+	background-color:#bbdda9;
+}
+
+.messages {
+    background-color:#fff;
+}

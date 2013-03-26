@@ -1,0 +1,4 @@
+"Product","Size","Unit price","Units ordered", "Surplus units", "Units required","Split price","Cost"
+
+{% for row in data %}"{{row.product}}","{{row.product.size}}",{{row.product.gross_price|stringformat:".2f"}},{{row.outgoing_units}},{% if row.surplus_units %}{{row.surplus_units}}{% endif %},{{row.units_required}},{% if row.product.is_splittable %}{{ row.product.get_price }}{% endif %},{{row.cost|stringformat:".2f"}}
+{% endfor %}"Grand total","","","","","","{{grand_total|stringformat:".2f"}}"

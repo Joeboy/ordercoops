@@ -1,0 +1,30 @@
+{% extends "catalogue/base.html" %}
+
+{% block content %}
+<div class="messages">
+{% for message in messages %}
+<p>{{message}}</p>
+{% endfor %}
+</div>
+
+<h2>Group Members</h2>
+
+{% if members %}
+    <table>
+    {% for member in members %}
+        <tr>
+        <td><p>{{member.name}}</p></td>
+        <td><p>{{member.username}}</p></td>
+        <td><p>{{member.email}}</p></td>
+        <td><p><a href="/coop-admin/members/edit/{{member.id}}/">Edit</a></p></td>
+        <td><p><a href="/coop-admin/members/delete/{{member.id}}/">Delete</a></p></td>
+        </tr>
+    {% endfor %}
+    </table>
+    <p><a href="/coop-admin/members/new/">Add a new member</a></p>
+    <p><a href="/coop-admin/members/email-all/">Send an email to all members</a></p>
+{% else %}
+    <p>Your group has no members.</p>
+{% endif %}
+
+{% endblock%}

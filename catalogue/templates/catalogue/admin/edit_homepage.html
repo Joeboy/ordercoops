@@ -1,0 +1,11 @@
+{% extends "catalogue/base.html" %}
+
+{% block content %}
+
+<h3>Complete the form below to alter the text that appears on your group's homepage (<a href="{{cooperative.get_absolute_absolute_url}}">{{cooperative.get_absolute_absolute_url}}</a>).
+<form action="" method="post">
+{{form.as_p}}
+<input type="submit">
+</form>
+
+{% endblock%}

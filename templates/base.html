@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        {% block meta_title %}<title>{% if meta_title %}{{meta_title}}{% else %}{{title}}{% endif %}</title>{% endblock %}
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        {% block meta_desc %}<meta name="description" content="{{meta_desc}}" />{% endblock %}
+        {% block meta_keywords %}<meta name="keywords" content="{{meta_keywords}}" />{% endblock %}
+        <meta name="robots" content="noindex,nofollow" />
+        <link rel="stylesheet" href="/static/default.css" />
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        {% block extrahead %}{% endblock %}
+    </head>
+
+    <body>
+        <div id="header"><p style="font-style:italic"><a href="/">{% block pageheader %}co-operative wholefood ordering website{% endblock %}</a></p></div>
+        <div id="container">
+
+            <div id="content">
+                {% block content %}{{content}}{% endblock %}
+            </div>
+
+            <div id="footer"></div>
+        </div>
+    </body>
+</html>
