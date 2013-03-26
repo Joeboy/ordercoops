@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import *
+from django.conf.urls import *
 #from catalogue.views import get_ordering_status
 
 urlpatterns = patterns('',
