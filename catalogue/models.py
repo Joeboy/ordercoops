@@ -6,7 +6,7 @@ from datetime import datetime, date
 from django.db import models, transaction
 from django.template.defaultfilters import slugify
 from userprofile.models import UserProfile, Cooperative
-from ordercoops.settings import PROJECT_DIR
+from ordercoops import settings
 VAT_CHOICES = (('V', 'V'), ('5', '5'))
 NEW_CHOICES = (('NEW', 'NEW'),)
 PRICECHANGE_CHOICES = (('UP', 'UP'), ('DOWN', 'DOWN'))
@@ -170,7 +170,7 @@ class Catalogue(models.Model):
 #    objects = CatalogueManager()
 
     def csvfilepath(self):
-        return os.path.join(PROJECT_DIR, 'media', self.csvfile.name)
+        return os.path.join(settings.MEDIA_ROOT, self.csvfile.name)
 
     @transaction.commit_on_success
     def save(self, *args, **kwargs):

@@ -15,9 +15,9 @@ SITE_ID = 1
 
 USE_I18N = True
 
-MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media', 'uploads/')
+MEDIA_ROOT = os.path.join(PROJECT_DIR, 'uploads/')
 
-MEDIA_URL = '/uploads/'
+#MEDIA_URL = '/uploads/'
 
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
