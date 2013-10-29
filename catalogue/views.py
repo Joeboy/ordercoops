@@ -108,7 +108,7 @@ def browse(request, order_id):
     if not brands:
         # Refresh brands list...
         cursor = connection.cursor()
-        cursor.execute("""select brand_slug, brand_name from catalogue_baseproduct where brand_slug != '' and catalogue_id=%s group by brand_slug, brand_name""", (order.catalogue.id,))
+        cursor.execute("""select brand_slug, brand_name from catalogue_baseproduct where brand_slug != '' and catalogue_id=%s group by brand_slug, brand_name order by brand_name""", (order.catalogue.id,))
 
         brands = cursor.fetchall()
         cache.set('catalogue_%d_brands' % order.catalogue.id, brands, 60*60*24*1)
